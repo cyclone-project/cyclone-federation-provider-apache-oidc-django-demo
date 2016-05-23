@@ -1,6 +1,4 @@
-# cyclone-federation-provider-apache-oidc-django-demo
-A demonstration on how to authentified a user in django using the CYCLONE federation provider with Apache 2 and mod_oidc
-
+# OpenID-Connect example with Apache2, SSL, the Cyclone Federation Provider and Django
 
 ## How to run:
 
@@ -10,20 +8,32 @@ A demonstration on how to authentified a user in django using the CYCLONE federa
 # Build with (docker)[https://www.docker.com]
 ./build.sh
 
-# Run 
+# Run on localhost
+./run.sh
+
+# Run on a distant server
+edit `settings.conf` and FQDN variable
 ./run.sh
 
 
+# Stopping and removing ALL container
+docker rm -f $(docker ps -aq)
+
+
 ```
+
+Visit `https://localhost`, for the openid-connect example. Once connected visit `https://localhost/polls`
+
+OIDCRemoteUserClaim setting can be used to specify which claim to use to set REMOTE_USER in apache2.
 
 ## Known problem
 
-If you encounter an error 100 during the build with the apt-get update, it can means that you are behind a firewall that is blocking some dns resolution. To fix it, use your in-house dns like this :
+# Error 100 in apt-get update
+
+If you encounter an error 100 during the build with the apt-get update, it can means that you are behind a firewall that is blocking some dns resolution. To fix it, uncomment and adapte `DNS_FOR_DOCKER` variable in `settings.conf`
 
 
-```shell
+# attempt to write a readonly database
 
-# Build with (docker)[https://www.docker.com] behind a firewall
-docker --dns 157.136.10.1 --dns 157.136.10.2 build -t cyclone/apache2:ssl .
-
-```
+Note that httpd inside the container must have execution right on `PROJECT_ROOT`, and rwx on `$PROJECT_ROOT/db.sqlite3`
+If you encounter an error 100 during the build with the apt-get update, it can means that you are behind a firewall that is blocking some dns resolution. To fix it, uncomment and adapte `DNS_FOR_DOCKER` variable in `settings.conf`
