@@ -1,4 +1,4 @@
-Django==1.9.4
+django>=1.11.18
 South==1.0.2
 argparse==1.2.1
 #django-openid-auth==0.7
